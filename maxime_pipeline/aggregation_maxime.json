@@ -1,0 +1,666 @@
+[
+  {
+    "$group": {
+      "_id": "$country",
+      "confirmed": {
+        "$push": {
+          "$substr": [
+            {
+              "$toString": "$confirmed_daily"
+            },
+            0,
+            1
+          ]
+        }
+      },
+      "deaths": {
+        "$push": {
+          "$substr": [
+            {
+              "$toString": "$deaths_daily"
+            },
+            0,
+            1
+          ]
+        }
+      }
+    }
+  },
+  {
+    "$addFields": {
+      "confirmed": {
+        "$filter": {
+          "input": "$confirmed",
+          "as": "elem",
+          "cond": {
+            "$and": [
+              {
+                "$ne": [
+                  "$$elem",
+                  "0"
+                ]
+              },
+              {
+                "$ne": [
+                  "$$elem",
+                  "-"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "deaths": {
+        "$filter": {
+          "input": "$deaths",
+          "as": "elem",
+          "cond": {
+            "$and": [
+              {
+                "$ne": [
+                  "$$elem",
+                  "0"
+                ]
+              },
+              {
+                "$ne": [
+                  "$$elem",
+                  "-"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "$addFields": {
+      "confirmed_size": {
+        "$size": "$confirmed"
+      },
+      "deaths_size": {
+        "$size": "$deaths"
+      }
+    }
+  },
+  {
+    "$match": {
+      "confirmed_size": {
+        "$gt": 0
+      },
+      "deaths_size": {
+        "$gt": 0
+      }
+    }
+  },
+  {
+    "$addFields": {
+      "benford": [
+        {
+          "digit": 1,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "1"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "1"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 2,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "2"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "2"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 3,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "3"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "3"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 4,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "4"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "4"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 5,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "5"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "5"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 6,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "6"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "6"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 7,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "7"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "7"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 8,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "8"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "8"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        },
+        {
+          "digit": 9,
+          "confirmed": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$confirmed",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "9"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$confirmed_size"
+                ]
+              },
+              1
+            ]
+          },
+          "deaths": {
+            "$round": [
+              {
+                "$divide": [
+                  {
+                    "$multiply": [
+                      100,
+                      {
+                        "$size": {
+                          "$filter": {
+                            "input": "$deaths",
+                            "as": "elem",
+                            "cond": {
+                              "$eq": [
+                                "$$elem",
+                                "9"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$deaths_size"
+                ]
+              },
+              1
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "$unionWith": {
+      "coll": "benford"
+    }
+  },
+  {
+    "$project": {
+      "country": "$_id",
+      "_id": 0,
+      "benford": 1,
+      "confirmed_size": 1,
+      "deaths_size": 1
+    }
+  }
+]

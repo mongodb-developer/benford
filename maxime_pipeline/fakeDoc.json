@@ -1,0 +1,52 @@
+{
+  "_id": "BenfordTheory",
+  "benford": [
+    {
+      "digit": 1,
+      "confirmed": 30.1,
+      "deaths": 30.1
+    },
+    {
+      "digit": 2,
+      "confirmed": 17.6,
+      "deaths": 17.6
+    },
+    {
+      "digit": 3,
+      "confirmed": 12.5,
+      "deaths": 12.5
+    },
+    {
+      "digit": 4,
+      "confirmed": 9.7,
+      "deaths": 9.7
+    },
+    {
+      "digit": 5,
+      "confirmed": 7.9,
+      "deaths": 7.9
+    },
+    {
+      "digit": 6,
+      "confirmed": 6.7,
+      "deaths": 6.7
+    },
+    {
+      "digit": 7,
+      "confirmed": 5.8,
+      "deaths": 5.8
+    },
+    {
+      "digit": 8,
+      "confirmed": 5.1,
+      "deaths": 5.1
+    },
+    {
+      "digit": 9,
+      "confirmed": 4.6,
+      "deaths": 4.6
+    }
+  ],
+  "confirmed_size": 999999,
+  "deaths_size": 999999
+}
